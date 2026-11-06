@@ -17,9 +17,11 @@ main{padding:0 0 20px}
 h2{font-size:1.5rem;line-height:2;font-weight:normal;color:var(--p);background:linear-gradient(to left,var(--pl),transparent);border-right:6px solid var(--a);padding:2px 14px 2px 10px;margin:10px 0 6px;border-radius:0 8px 8px 0}
 .v{display:flow-root;text-align:justify;text-align-last:start;background:var(--v);border:1px solid var(--b);border-radius:12px;padding:8px 12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.05);content-visibility:auto;contain-intrinsic-size:auto 100px}
 .v:target,.v.hl{background:#f6ecc4;border-color:var(--a)}
-.n{display:inline-flex;vertical-align:middle;min-width:2rem;height:2rem;padding:0 6px;border-radius:1rem;background:#d8ded0;color:#1e4735;align-items:center;justify-content:center;font:700 .85rem system-ui,sans-serif;margin:0 0 0 8px;border:1px solid #c5d0c0}
+.n{display:inline-flex;vertical-align:middle;flex:none;width:1.75rem;height:1.75rem;padding:0;border-radius:50%;background:#e5ebe1;color:#285b48;align-items:center;justify-content:center;font:600 .82rem/1 system-ui,sans-serif;margin:0 0 0 8px;border:1px solid #c8d4c7}
 .t{display:inline}
 h2.sh{display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.s-title{display:inline-flex;align-items:center;gap:10px;min-width:0}
+.sid{display:inline-flex;flex:none;align-items:center;justify-content:center;width:2.35rem;height:2.35rem;padding:0;border-radius:50%;background:#e8f2ec;color:var(--p);font:700 1.15rem/1 system-ui,sans-serif;border:1.5px solid #b9cfc3;box-shadow:inset 0 0 0 2px #f8fbf8;direction:rtl}
 .tg{flex:none;width:1.8rem;height:1.8rem;border-radius:50%;background:var(--p);color:#fff;display:flex;align-items:center;justify-content:center;font:700 1.2rem/1 system-ui,sans-serif}
 .sur.c{display:none}
 header strong{white-space:nowrap;font-size:14px;flex:none}
@@ -43,7 +45,7 @@ const m=document.getElementById('m');
 const NM="الْفَاتِحَةِ|الْبَقَرَةِ|آلِ عِمْرَانَ|النِّسَاءِ|الْمَائِدَةِ|الْأَنْعَامِ|الْأَعْرَافِ|الْأَنْفَالِ|التَّوْبَةِ|يُونُسَ|هُودٍ|يُوسُفَ|الرَّعْدِ|إِبْرَاهِيمَ|الْحِجْرِ|النَّحْلِ|الْإِسْرَاءِ|الْكَهْفِ|مَرْيَمَ|طه|الْأَنْبِيَاءِ|الْحَجِّ|الْمُؤْمِنُونَ|النُّورِ|الْفُرْقَانِ|الشُّعَرَاءِ|النَّمْلِ|الْقَصَصِ|الْعَنْكَبُوتِ|الرُّومِ|لُقْمَانَ|السَّجْدَةِ|الْأَحْزَابِ|سَبَإٍ|فَاطِرٍ|يس|الصَّافَّاتِ|ص|الزُّمَرِ|غَافِرٍ|فُصِّلَتْ|الشُّورَى|الزُّخْرُفِ|الدُّخَانِ|الْجَاثِيَةِ|الْأَحْقَافِ|مُحَمَّدٍ|الْفَتْحِ|الْحُجُرَاتِ|ق|الذَّارِيَاتِ|الطُّورِ|النَّجْمِ|الْقَمَرِ|الرَّحْمَٰنِ|الْوَاقِعَةِ|الْحَدِيدِ|الْمُجَادَلَةِ|الْحَشْرِ|الْمُمْتَحَنَةِ|الصَّفِّ|الْجُمُعَةِ|الْمُنَافِقُونَ|التَّغَابُنِ|الطَّلَاقِ|التَّحْرِيمِ|الْمُلْكِ|الْقَلَمِ|الْحَاقَّةِ|الْمَعَارِجِ|نُوحٍ|الْجِنِّ|الْمُزَّمِّلِ|الْمُدَّثِّرِ|الْقِيَامَةِ|الْإِنْسَانِ|الْمُرْسَلَاتِ|النَّبَإِ|النَّازِعَاتِ|عَبَسَ|التَّكْوِيرِ|الِانْفِطَارِ|الْمُطَفِّفِينَ|الِانْشِقَاقِ|الْبُرُوجِ|الطَّارِقِ|الْأَعْلَى|الْغَاشِيَةِ|الْفَجْرِ|الْبَلَدِ|الشَّمْسِ|اللَّيْلِ|الضُّحَى|الشَّرْحِ|التِّينِ|الْعَلَقِ|الْقَدْرِ|الْبَيِّنَةِ|الزَّلْزَلَةِ|الْعَادِيَاتِ|الْقَارِعَةِ|التَّكَاثُرِ|الْعَصْرِ|الْهُمَزَةِ|الْفِيلِ|قُرَيْشٍ|الْمَاعُونِ|الْكَوْثَرِ|الْكَافِرُونَ|النَّصْرِ|الْمَسَدِ|الْإِخْلَاصِ|الْفَلَقِ|النَّاسِ".split('|');
 let g=0,html='';
 for(const [id,name,vs] of Q){
-  html+='<h2 class="sh"><span>'+String(id).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d])+' - سُورَةُ '+NM[id-1]+'</span><span class="tg">+</span></h2><div class="sur c">';
+  html+='<h2 class="sh"><span class="s-title"><span class="sid" aria-label="رقم السورة">'+String(id).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d])+'</span><span>سُورَةُ '+NM[id-1]+'</span></span><span class="tg">+</span></h2><div class="sur c">';
   for(let k=0;k<vs.length;k++){const t=vs[k];g++;html+='<div class="v" id="v'+g+'"><span class="n">'+String(k+1).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d])+'</span><span class="t">'+t+'</span></div>';}
   html+='</div>';
 }
