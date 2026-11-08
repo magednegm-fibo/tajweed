@@ -32,6 +32,80 @@ header strong{white-space:nowrap;font-size:14px;flex:none}
 #info{font-size:11px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 header .sec{background:var(--p);color:#fff;border:0;min-width:44px;padding:2px 12px;font-size:28px;font-weight:700;line-height:1.2;border-radius:8px}
 </style>
+
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ===== بطاقة التفسير تحت الآية ===== */
+.v {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent !important;
+  tap-highlight-color: transparent !important;
+  outline: none !important;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.v:active {
+  background: var(--v) !important; /* منع وميض الضغط */
+}
+
+.tafsir-card {
+  display: none;
+  background: #fffef8;
+  border: 1px solid #c8e6c9;
+  border-radius: 12px;
+  padding: 10px 14px 12px;
+  margin: 0 0 8px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  font-family: 'Amiri', 'Traditional Arabic', serif;
+  font-size: 1.28rem;
+  line-height: 1.9;
+  color: #222;
+  direction: rtl;
+  text-align: justify;
+  text-align-last: start;
+  box-sizing: border-box;
+  width: 100%;
+}
+.tafsir-card.open {
+  display: block;
+}
+.tafsir-card .tafsir-header {
+  font-weight: 700;
+  color: #1a5f2a;
+  font-size: 1.08rem;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed #a5d6a7;
+  text-align: right;
+}
+.tafsir-card .tafsir-text {
+  text-align: justify;
+  text-align-last: start;
+  white-space: normal;
+}
+.tafsir-card .tafsir-loading,
+.tafsir-card .tafsir-error {
+  color: #666;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 10px 0;
+}
+.tafsir-card .tafsir-error { color: #b71c1c; }
+.tafsir-card .tafsir-source {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
+  border-top: 1px solid #e8e8e0;
+  padding-top: 6px;
+  text-align: right;
+}
+.tafsir-card .tafsir-source a {
+  color: #1a5f2a;
+  text-decoration: none;
+  font-weight: 700;
+}
+</style>
+
 </head>
 <body>
 <header>
@@ -71,6 +145,123 @@ document.getElementById('all').onclick=()=>m.querySelectorAll('h2.sh').forEach(h
 document.getElementById('none').onclick=()=>m.querySelectorAll('h2.sh').forEach(h=>setS(h,false));
 document.getElementById('go').onclick=go;
 document.getElementById('num').addEventListener('keydown',e=>{if(e.key==='Enter')go()});
+
+// ===== تفسير المختصر - بطاقة تحت الآية =====
+(function(){
+  const CACHE = {};
+  const LOADING = {};
+  const globalToSA = [];
+  let g = 0;
+  for (const [sid, name, vs] of Q) {
+    for (let a = 1; a <= vs.length; a++) {
+      g++;
+      globalToSA[g] = {s: sid, a: a, name: name};
+    }
+  }
+
+  function fetchSurah(s) {
+    if (CACHE[s]) return Promise.resolve(CACHE[s]);
+    if (LOADING[s]) return LOADING[s];
+    LOADING[s] = fetch('https://cdn.jsdelivr.net/gh/spa5k/tafsir_api@main/tafsir/ar-tafsir-al-mukhtasar/' + s + '.json')
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(data => { CACHE[s] = data; delete LOADING[s]; return data; })
+      .catch(err => { delete LOADING[s]; throw err; });
+    return LOADING[s];
+  }
+
+  // تحميل مسبق لأول آية ظاهرة من كل سورة
+  if ('IntersectionObserver' in window) {
+    const seen = new Set();
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        const num = parseInt(e.target.id.slice(1), 10);
+        const info = globalToSA[num];
+        if (info && !seen.has(info.s)) {
+          seen.add(info.s);
+          fetchSurah(info.s).catch(() => {});
+        }
+      }
+    }, { rootMargin: '400px 0px', threshold: 0 });
+    const first = new Set();
+    document.querySelectorAll('.v[id^="v"]').forEach(v => {
+      const num = parseInt(v.id.slice(1), 10);
+      const info = globalToSA[num];
+      if (info && !first.has(info.s)) {
+        first.add(info.s);
+        io.observe(v);
+      }
+    });
+  }
+
+  let openCard = null;
+
+  function buildHTML(info, item) {
+    const {s, a, name} = info;
+    if (!item || !item.text) {
+      return '<div class="tafsir-header">سورة ' + name + ' — الآية ' + a + '</div>' +
+             '<div class="tafsir-error">لا يوجد تفسير متاح لهذه الآية.</div>' +
+             '<div class="tafsir-source"><a href="https://mokhtasr.com/ar/books/319?sura=' + s + '&aya=' + a + '" target="_blank" rel="noopener">فتح في موقع المختصر ↗</a></div>';
+    }
+    return '<div class="tafsir-header">سورة ' + name + ' — الآية ' + a + '</div>' +
+           '<div class="tafsir-text">' + item.text + '</div>' +
+           '<div class="tafsir-source">المصدر: المختصر في تفسير القرآن الكريم · <a href="https://mokhtasr.com/ar/books/319?sura=' + s + '&aya=' + a + '" target="_blank" rel="noopener">الموقع الرسمي ↗</a></div>';
+  }
+
+  function hide(card) {
+    if (!card) return;
+    card.style.display = 'none';
+    card.classList.remove('open');
+    if (openCard === card) openCard = null;
+  }
+  function show(card) {
+    if (openCard && openCard !== card) hide(openCard);
+    card.style.display = 'block';
+    card.classList.add('open');
+    openCard = card;
+  }
+
+  m.addEventListener('click', function(ev) {
+    if (ev.target.closest('.tafsir-card')) return;
+    if (ev.target.closest('h2.sh')) return;
+
+    const v = ev.target.closest('.v');
+    if (!v) return;
+
+    const id = v.id;
+    if (!id || !id.startsWith('v')) return;
+    const num = parseInt(id.slice(1), 10);
+    if (!num || !globalToSA[num]) return;
+
+    let card = v.nextElementSibling;
+    if (card && card.classList.contains('tafsir-card')) {
+      if (card.classList.contains('open')) hide(card);
+      else show(card);
+      return;
+    }
+
+    const info = globalToSA[num];
+    card = document.createElement('div');
+    card.className = 'tafsir-card';
+    card.style.display = 'none';
+    v.after(card);
+
+    const done = (item) => {
+      card.innerHTML = buildHTML(info, item);
+      card.dataset.loaded = '1';
+      show(card);
+    };
+
+    if (CACHE[info.s]) {
+      done(CACHE[info.s].find(x => Number(x.ayah) === info.a));
+    } else {
+      fetchSurah(info.s)
+        .then(list => done(list.find(x => Number(x.ayah) === info.a)))
+        .catch(() => done(null));
+    }
+  });
+})();
+
 </script>
 </body>
 </html>
