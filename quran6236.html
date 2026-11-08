@@ -11,13 +11,15 @@
 html{scroll-padding-top:calc(70px + env(safe-area-inset-top,0px))}
 body{margin:0 auto;background:var(--bg);color:var(--t);max-width:920px;font-family:"KFGQPC","Traditional Arabic",serif;font-size:27px;line-height:2.1;padding:env(safe-area-inset-top,0px) 10px calc(60px + env(safe-area-inset-bottom,0px))}
 header{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--b);padding:10px 4px;z-index:5;display:flex;gap:6px;flex-wrap:nowrap;align-items:center;font-family:system-ui,sans-serif;font-size:15px;color:var(--p)}
-header input{width:72px;min-width:0;padding:6px 8px;border:1px solid var(--b);border-radius:6px;background:var(--c);color:var(--t);font-size:15px}
+header input{width:150px;min-width:0;padding:6px 8px;border:1px solid var(--b);border-radius:6px;background:var(--c);color:var(--t);font-size:15px}
 header button{flex:none;padding:6px 10px;border:0;border-radius:6px;background:var(--p);color:#fff;font-size:15px;cursor:pointer}
 main{padding:0 0 20px}
 h2{font-size:1.5rem;line-height:2;font-weight:normal;color:var(--p);background:linear-gradient(to left,var(--pl),transparent);border-right:6px solid var(--a);padding:2px 14px 2px 10px;margin:10px 0 6px;border-radius:0 8px 8px 0}
 .v{display:flow-root;text-align:justify;text-align-last:start;background:var(--v);border:1px solid var(--b);border-radius:12px;padding:8px 12px;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,.05);content-visibility:auto;contain-intrinsic-size:auto 100px}
 .v:target,.v.hl{background:#f6ecc4;border-color:var(--a)}
-.ruku-separator{height:3px;width:38%;max-width:180px;background:#a77b45;border-radius:3px;margin:16px auto;opacity:.85}
+.ruku-sep-row{display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 8px;direction:rtl}
+.ruku-sep-row .ruku-sep-label{font-family:'Amiri','Traditional Arabic',serif;font-size:0.95rem;color:#a77b45;font-weight:700;white-space:nowrap;text-align:center}
+.ruku-sep-row .ruku-separator{height:3px;width:18%;max-width:90px;flex:0 0 auto;background:#a77b45;border-radius:3px;opacity:.85;margin:0}
 .manzil-separator{display:block;height:3px;width:38%;max-width:180px;background:var(--p);border-radius:3px;margin:10px auto;opacity:.9}
 .v.ruku-a,.v.ruku-b{background:#f9f6ee}
 
@@ -111,7 +113,7 @@ header .sec{background:var(--p);color:#fff;border:0;min-width:44px;padding:2px 1
 <body>
 <header>
 <strong>القرآن الكريم</strong>
-<input id="num" type="text" inputmode="numeric" placeholder="رقم الآية">
+<input id="num" type="text" inputmode="numeric" placeholder="رقم الركوع (١–٥٥٨)">
 <button id="go">انتقال</button>
 <button id="all" class="sec" title="فتح الكل" aria-label="فتح الكل">+</button>
 <button id="none" class="sec" title="طي الكل" aria-label="طي الكل">−</button>
@@ -125,20 +127,40 @@ const NM="الْفَاتِحَةِ|الْبَقَرَةِ|آلِ عِمْرَا�
 const RUKU_LENGTHS=[7,7,13,9,10,7,13,2,10,11,4,10,7,9,9,8,12,6,5,11,4,9,6,6,8,14,6,5,7,3,4,7,6,5,4,3,6,7,8,2,3,9,11,10,11,13,9,8,9,11,10,8,11,9,14,5,7,16,9,9,11,10,4,8,3,8,9,8,9,11,6,11,4,5,4,4,8,3,11,8,7,11,10,9,5,5,6,8,7,8,9,7,6,10,11,9,7,7,8,7,5,10,10,10,11,9,5,5,10,12,8,4,6,10,11,8,11,4,6,4,11,10,15,6,8,8,6,5,6,8,12,9,6,9,18,3,12,6,4,6,5,9,10,7,18,10,9,9,9,7,4,10,6,5,6,6,10,8,5,8,5,17,7,6,8,9,10,11,8,4,7,10,10,10,10,13,7,10,12,10,11,6,8,16,11,14,11,8,15,12,14,14,6,14,9,6,7,7,8,11,11,14,11,7,7,11,8,5,6,6,6,6,9,6,7,7,11,15,10,19,16,19,20,9,12,4,9,6,10,10,5,5,6,7,6,11,10,9,9,10,12,8,10,12,8,10,7,7,9,7,11,12,5,5,9,13,5,4,6,11,12,19,9,15,25,10,15,17,16,24,30,22,13,15,11,13,7,10,19,12,9,25,18,19,10,12,3,8,5,10,9,7,8,6,22,10,18,27,15,26,10,10,6,8,6,10,7,4,3,9,11,14,10,16,17,9,24,18,17,36,18,18,19,16,16,36,14,17,13,14,8,16,11,13,8,7,14,8,10,15,7,6,13,9,8,14,7,12,6,10,9,8,13,13,7,11,8,11,4,11,11,8,8,12,7,7,6,12,6,10,5,9,12,9,6,9,9,7,7,12,11,8,12,20,18,17,16,21,53,39,25,44,14,12,14,24,24,9,12,10,10,11,11,7,5,9,11,7,10,13,10,8,10,7,8,10,7,7,12,10,9,10,10,14,10,15,10,10,10,11,11,22,29,13,17,11,10,5,11,10,10,6,9,11,8,9,10,10,7,9,3,10,8,15,14,16,23,23,14,28,21,25,7,30,22,18,15,25,20,33,40,34,22,10,9,6,4,6,7,9,10,7,7,6,7,9,5,8,3,8,3,10,8,7,5,7,5,14,16,33,19,37,15,35,9,20,8,19,9,19,1,31,25,30,10,22,9,40,10,30,10,26,20,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6];
 let rukuIndex=0,rukuRemaining=RUKU_LENGTHS[0],g=0,html='';
 const MANZIL_STARTS=new Set([5,10,17,26,37,50]);
+const RUKU_FIRST_VERSE=[]; // ruku 1..558 -> global verse id of first ayah
 for(const [id,name,vs] of Q){
   if(MANZIL_STARTS.has(id)) html+='<div class="manzil-separator" aria-hidden="true"></div>';
   html+='<h2 class="sh"><span class="s-title"><span class="sid" aria-label="رقم السورة">'+String(id).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d])+'</span><span>سُورَةُ '+NM[id-1]+'</span></span></h2><div class="sur c">';
-  for(let k=0;k<vs.length;k++){const t=vs[k];g++;const rukuClass=(rukuIndex%2===0?'ruku-a':'ruku-b');html+='<div class="v '+rukuClass+'" id="v'+g+'"><span class="n">'+String(k+1).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d])+'</span><span class="t">'+t+'</span></div>';rukuRemaining--;if(rukuRemaining===0){html+='<div class="ruku-separator" aria-hidden="true"></div>';rukuIndex++;rukuRemaining=RUKU_LENGTHS[rukuIndex]||0;}}
+  for(let k=0;k<vs.length;k++){
+    const t=vs[k];g++;
+    const rukuNum=rukuIndex+1;
+    const rukuClass=(rukuIndex%2===0?'ruku-a':'ruku-b');
+    const isFirstOfRuku=(rukuRemaining===RUKU_LENGTHS[rukuIndex]);
+    if(isFirstOfRuku) RUKU_FIRST_VERSE[rukuNum]=g;
+    html+='<div class="v '+rukuClass+'" id="v'+g+'" data-ruku="'+rukuNum+'"><span class="n">'+String(k+1).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d])+'</span><span class="t">'+t+'</span></div>';
+    rukuRemaining--;
+    if(rukuRemaining===0){
+      html+='<div class="ruku-sep-row"><div class="ruku-separator" aria-hidden="true"></div><span class="ruku-sep-label">سُورَةُ '+NM[id-1]+'</span><div class="ruku-separator" aria-hidden="true"></div></div>';
+      rukuIndex++;
+      rukuRemaining=RUKU_LENGTHS[rukuIndex]||0;
+    }
+  }
   html+='</div>';
 }
 if(g!==6236||rukuIndex!==558||rukuRemaining!==0){throw new Error('Ruku boundary data mismatch');}m.innerHTML=html;
 function go(){
   const raw=document.getElementById('num').value.replace(/[\u0660-\u0669]/g,d=>d.charCodeAt(0)-1632).replace(/[\u06F0-\u06F9]/g,d=>d.charCodeAt(0)-1776);const n=parseInt(raw,10);
-  if(!(n>=1&&n<=6236)){document.getElementById('info').textContent='أدخل رقمًا من 1 إلى 6236';return;}
+  if(!(n>=1&&n<=558)){document.getElementById('info').textContent='أدخل رقم ركوع من 1 إلى 558';return;}
+  const vid=RUKU_FIRST_VERSE[n];
+  if(!vid){document.getElementById('info').textContent='ركوع غير موجود';return;}
   document.querySelectorAll('.hl').forEach(e=>e.classList.remove('hl'));
-  const e=document.getElementById('v'+n);const s=e.closest('.sur');if(s.classList.contains('c'))setS(s.previousElementSibling,true);e.classList.add('hl');
+  const e=document.getElementById('v'+vid);
+  if(!e){document.getElementById('info').textContent='تعذر الوصول للركوع';return;}
+  const s=e.closest('.sur');
+  if(s&&s.classList.contains('c'))setS(s.previousElementSibling,true);
+  e.classList.add('hl');
   e.scrollIntoView({block:'center'});
-  document.getElementById('info').textContent='';
+  document.getElementById('info').textContent='ركوع '+n;
 }
 function setS(h,open){h.nextElementSibling.classList.toggle('c',!open);}
 m.addEventListener('click',ev=>{const h=ev.target.closest('h2.sh');if(h)setS(h,h.nextElementSibling.classList.contains('c'));});
@@ -201,12 +223,10 @@ document.getElementById('num').addEventListener('keydown',e=>{if(e.key==='Enter'
     const {s, a, name} = info;
     if (!item || !item.text) {
       return '<div class="tafsir-header">سورة ' + name + ' — الآية ' + a + '</div>' +
-             '<div class="tafsir-error">لا يوجد تفسير متاح لهذه الآية.</div>' +
-             '<div class="tafsir-source"><a href="https://mokhtasr.com/ar/books/319?sura=' + s + '&aya=' + a + '" target="_blank" rel="noopener">فتح في موقع المختصر ↗</a></div>';
+             '<div class="tafsir-error">لا يوجد تفسير متاح لهذه الآية.</div>';
     }
     return '<div class="tafsir-header">سورة ' + name + ' — الآية ' + a + '</div>' +
-           '<div class="tafsir-text">' + item.text + '</div>' +
-           '<div class="tafsir-source">المصدر: المختصر في تفسير القرآن الكريم · <a href="https://mokhtasr.com/ar/books/319?sura=' + s + '&aya=' + a + '" target="_blank" rel="noopener">الموقع الرسمي ↗</a></div>';
+           '<div class="tafsir-text">' + item.text + '</div>';
   }
 
   function hide(card) {
