@@ -36,6 +36,7 @@ header .sec{background:var(--p);color:#fff;border:0;min-width:44px;padding:2px 1
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* ===== بطاقة التفسير تحت الآية ===== */
+.tg{display:none!important}
 .v {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent !important;
@@ -126,7 +127,7 @@ let rukuIndex=0,rukuRemaining=RUKU_LENGTHS[0],g=0,html='';
 const MANZIL_STARTS=new Set([5,10,17,26,37,50]);
 for(const [id,name,vs] of Q){
   if(MANZIL_STARTS.has(id)) html+='<div class="manzil-separator" aria-hidden="true"></div>';
-  html+='<h2 class="sh"><span class="s-title"><span class="sid" aria-label="رقم السورة">'+String(id).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d])+'</span><span>سُورَةُ '+NM[id-1]+'</span></span><span class="tg">+</span></h2><div class="sur c">';
+  html+='<h2 class="sh"><span class="s-title"><span class="sid" aria-label="رقم السورة">'+String(id).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d])+'</span><span>سُورَةُ '+NM[id-1]+'</span></span></h2><div class="sur c">';
   for(let k=0;k<vs.length;k++){const t=vs[k];g++;const rukuClass=(rukuIndex%2===0?'ruku-a':'ruku-b');html+='<div class="v '+rukuClass+'" id="v'+g+'"><span class="n">'+String(k+1).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d])+'</span><span class="t">'+t+'</span></div>';rukuRemaining--;if(rukuRemaining===0){html+='<div class="ruku-separator" aria-hidden="true"></div>';rukuIndex++;rukuRemaining=RUKU_LENGTHS[rukuIndex]||0;}}
   html+='</div>';
 }
@@ -139,7 +140,7 @@ function go(){
   e.scrollIntoView({block:'center'});
   document.getElementById('info').textContent='';
 }
-function setS(h,open){h.nextElementSibling.classList.toggle('c',!open);h.querySelector('.tg').textContent=open?'−':'+';}
+function setS(h,open){h.nextElementSibling.classList.toggle('c',!open);}
 m.addEventListener('click',ev=>{const h=ev.target.closest('h2.sh');if(h)setS(h,h.nextElementSibling.classList.contains('c'));});
 document.getElementById('all').onclick=()=>m.querySelectorAll('h2.sh').forEach(h=>setS(h,true));
 document.getElementById('none').onclick=()=>m.querySelectorAll('h2.sh').forEach(h=>setS(h,false));
