@@ -140,7 +140,10 @@ for(const [id,name,vs] of Q){
     html+='<div class="v '+rukuClass+'" id="v'+g+'" data-ruku="'+rukuNum+'"><span class="n">'+String(k+1).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d])+'</span><span class="t">'+t+'</span></div>';
     rukuRemaining--;
     if(rukuRemaining===0){
-      html+='<div class="ruku-sep-row"><div class="ruku-separator" aria-hidden="true"></div><span class="ruku-sep-label">سُورَةُ '+NM[id-1]+'</span><div class="ruku-separator" aria-hidden="true"></div></div>';
+      // لا نضع فاصل الركوع إذا انتهت السورة مع نهاية الركوع
+      if(k < vs.length - 1){
+        html+='<div class="ruku-sep-row"><div class="ruku-separator" aria-hidden="true"></div><span class="ruku-sep-label">سُورَةُ '+NM[id-1]+'</span><div class="ruku-separator" aria-hidden="true"></div></div>';
+      }
       rukuIndex++;
       rukuRemaining=RUKU_LENGTHS[rukuIndex]||0;
     }
