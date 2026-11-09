@@ -35,8 +35,24 @@ header strong{white-space:nowrap;font-size:14px;flex:none}
 header .sec{background:var(--p);color:#fff;border:0;min-width:44px;padding:2px 12px;font-size:28px;font-weight:700;line-height:1.2;border-radius:8px}
 </style>
 
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
+@font-face {
+  font-family: 'Amiri';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/amiri/v30/J7aRnpd8CGxBHpUrtLMA7w.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+}
+@font-face {
+  font-family: 'Amiri';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/amiri/v30/J7acnpd8CGxBHp2VkaY6zp5yGw.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+}
+
 /* ===== بطاقة التفسير تحت الآية ===== */
 .tg{display:none!important}
 .v {
@@ -59,50 +75,38 @@ header .sec{background:var(--p);color:#fff;border:0;min-width:44px;padding:2px 1
   padding: 10px 14px 12px;
   margin: 0 0 8px 0;
   box-shadow: 0 2px 8px rgba(0,0,0,.05);
-  font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', serif;
-  font-size: 22px;
+  font-family: 'Amiri', 'Traditional Arabic', serif;
+  font-size: 1.28rem;
   font-weight: 400;
-  line-height: 1.95;
-  color: #1a1a1a;
+  line-height: 1.9;
+  color: #222;
   direction: rtl;
   text-align: justify;
   text-align-last: start;
   box-sizing: border-box;
   width: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: geometricPrecision;
 }
 .tafsir-card.open {
   display: block;
 }
 .tafsir-card .tafsir-header {
+  font-family: 'Amiri', 'Traditional Arabic', serif;
   font-weight: 700;
   color: #1a5f2a;
-  font-size: 18px;
+  font-size: 1.08rem;
   margin-bottom: 8px;
   padding-bottom: 6px;
   border-bottom: 1px dashed #a5d6a7;
   text-align: right;
 }
 .tafsir-card .tafsir-text {
+  font-family: 'Amiri', 'Traditional Arabic', serif;
   text-align: justify;
   text-align-last: start;
   white-space: normal;
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 1.95;
-}
-@media (min-width: 768px) {
-  .tafsir-card,
-  .tafsir-card .tafsir-text {
-    font-size: 24px;
-    line-height: 2;
-  }
-  .tafsir-card .tafsir-header {
-    font-size: 19px;
-  }
 }
 .tafsir-card .tafsir-loading,
 .tafsir-card .tafsir-error {
