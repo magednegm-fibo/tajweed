@@ -59,15 +59,20 @@ header .sec{background:var(--p);color:#fff;border:0;min-width:44px;padding:2px 1
   padding: 10px 14px 12px;
   margin: 0 0 8px 0;
   box-shadow: 0 2px 8px rgba(0,0,0,.05);
-  font-family: 'Amiri', 'Traditional Arabic', serif;
-  font-size: 1.28rem;
-  line-height: 1.9;
-  color: #222;
+  font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.95;
+  color: #1a1a1a;
   direction: rtl;
   text-align: justify;
   text-align-last: start;
   box-sizing: border-box;
   width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 .tafsir-card.open {
   display: block;
@@ -75,7 +80,7 @@ header .sec{background:var(--p);color:#fff;border:0;min-width:44px;padding:2px 1
 .tafsir-card .tafsir-header {
   font-weight: 700;
   color: #1a5f2a;
-  font-size: 1.08rem;
+  font-size: 18px;
   margin-bottom: 8px;
   padding-bottom: 6px;
   border-bottom: 1px dashed #a5d6a7;
@@ -85,6 +90,19 @@ header .sec{background:var(--p);color:#fff;border:0;min-width:44px;padding:2px 1
   text-align: justify;
   text-align-last: start;
   white-space: normal;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.95;
+}
+@media (min-width: 768px) {
+  .tafsir-card,
+  .tafsir-card .tafsir-text {
+    font-size: 24px;
+    line-height: 2;
+  }
+  .tafsir-card .tafsir-header {
+    font-size: 19px;
+  }
 }
 .tafsir-card .tafsir-loading,
 .tafsir-card .tafsir-error {
